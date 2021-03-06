@@ -26,6 +26,8 @@ using System.Windows.Threading;
 using Microsoft.Win32;
 using System.Windows;
 using ScottPlot.Plottable;
+using GameAnalyticsSDK.Net;
+using System.Reflection;
 
 namespace NetworkProfiler
 {
@@ -76,6 +78,11 @@ namespace NetworkProfiler
 
 	public partial class MainWindow
 	{
+		// Please DO NOT change this. If you don't want Analytics, set both GAME_KEY and SECRET_KEY to null ///////////////////
+		private static readonly string GAME_KEY = "81ebb126baf40ca75b9ce26e2f3e7ad2"; // null
+		private static readonly string SECRET_KEY = "18f49fbf8da84dadaff7ca0ad76ab01f78771725"; // null
+		///////////////////////////////////////////////////////////////////////////////////////////////
+
 		/** Currently selected frame on chart			*/
 		//int CurrentFrame = 0;
 
@@ -104,6 +111,36 @@ namespace NetworkProfiler
 			SetDefaultLineView();
 			NetworkChart.Plot.Legend(true, ScottPlot.Alignment.UpperLeft);
 			DataContext = this;
+
+			if (GAME_KEY != null && SECRET_KEY != null)
+			{
+				GameAnalytics.ConfigureBuild($"Unreal Network Profiler v{GetProductVersionString()}");
+				GameAnalytics.Initialize(GAME_KEY, SECRET_KEY);
+
+#if DEBUG
+				GameAnalytics.AddDesignEvent("Program:Start:Debug");
+#else
+				GameAnalytics.AddDesignEvent("Program:Start:Release");
+#endif
+			}
+		}
+
+		private static string GetProductVersionString()
+		{
+			Version ProductVersion = Assembly.GetEntryAssembly().GetName().Version;
+			string ReturnValue = $"{ProductVersion.Major}.{ProductVersion.Minor}";
+
+			if (ProductVersion.Build > 0)
+			{
+				ReturnValue += $".{ProductVersion.Build}";
+			}
+
+			if (ProductVersion.Revision > 0)
+			{
+				ReturnValue += $".{ProductVersion.Revision}";
+			}
+
+			return ReturnValue;
 		}
 
 		private void SetDefaultLineView()
@@ -528,6 +565,11 @@ namespace NetworkProfiler
 				MaxProfileMinutes = 0;
 				MaxProfileMinutesTextBox.Text = "";
 			}
+		}
+
+		private void UnrealNetworkProfilerMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			GameAnalytics.EndSession();
 		}
 	}
 

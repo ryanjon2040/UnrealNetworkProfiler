@@ -1,4 +1,4 @@
-﻿<hc:GlowWindow
+﻿<hc:GlowWindow x:Name="UnrealNetworkProfilerMainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
 		xmlns:hc="https://handyorg.github.io/handycontrol"
 		x:Class="NetworkProfiler.MainWindow"
 		mc:Ignorable="d"
-		Title="Unreal Engine Network Profiler" Height="720" Width="1280">
+		Title="Unreal Engine Network Profiler" Height="720" Width="1280" Closing="UnrealNetworkProfilerMainWindow_Closing">
 	<hc:GlowWindow.NonClientAreaContent>
 		<StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
 			<Separator Width="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
