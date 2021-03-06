@@ -6,7 +6,7 @@
 		xmlns:hc="https://handyorg.github.io/handycontrol"
 		x:Class="NetworkProfiler.MainWindow"
 		mc:Ignorable="d"
-		Title="Unreal Engine Network Profiler" Height="1080" Width="1920">
+		Title="Unreal Engine Network Profiler" Height="720" Width="1280">
 	<hc:GlowWindow.NonClientAreaContent>
 		<StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
 			<Separator Width="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
