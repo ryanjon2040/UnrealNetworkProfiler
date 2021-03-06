@@ -15,3 +15,12 @@ This is a WPF rewrite of Network Profiler by Epic Games. Check out the original 
 ![](https://img.shields.io/github/languages/code-size/ryanjon2040/UnrealNetworkProfiler.svg?style=flat) ![](https://img.shields.io/github/repo-size/ryanjon2040/UnrealNetworkProfiler.svg?style=flat)
 
 ![Screenshot](NetworkProfiler.png)
+
+Dependencies
+===================
+
+[HandyControl](https://github.com/HandyOrg/HandyControl)
+
+[ScottPlot](https://github.com/ScottPlot/ScottPlot)
+
+[GameAnalytics](https://github.com/GameAnalytics/GA-SDK-C-SHARP)
