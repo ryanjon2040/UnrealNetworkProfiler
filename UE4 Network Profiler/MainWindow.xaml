@@ -1,0 +1,229 @@
+﻿<hc:GlowWindow
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:hc="https://handyorg.github.io/handycontrol"
+		x:Class="NetworkProfiler.MainWindow"
+		mc:Ignorable="d"
+		Title="Unreal Engine Network Profiler" Height="1080" Width="1920">
+	<hc:GlowWindow.NonClientAreaContent>
+		<StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
+			<Separator Width="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+			<Button x:Name="AboutBtn" Content="About" Style="{StaticResource ButtonBaseStyle}"/>
+		</StackPanel>
+	</hc:GlowWindow.NonClientAreaContent>
+	<Grid>
+		<DockPanel>
+			<StackPanel DockPanel.Dock="Top">
+				<Button x:Name="OpenNetworkProfileBtn" Content="Open Network Profile" Margin="10" hc:BorderElement.CornerRadius="5" HorizontalAlignment="Stretch" Click="OpenNetworkProfileBtn_Click"/>
+				<DockPanel>
+					<TextBlock x:Name="EarlyOutLabel" Text="Max Profile Minutes:" Margin="10" VerticalAlignment="Center" />
+					<TextBox x:Name="MaxProfileMinutesTextBox" Margin="0 10 0 10" Width="60" TextChanged="MaxProfileMinutesTextBox_TextChanged" />
+					<ProgressBar x:Name="CurrentProgress" Margin="10 0 10 0"  />
+				</DockPanel>
+			</StackPanel>
+
+			<hc:TabControl ShowCloseButton="False" IsAnimationEnabled="True" IsDraggable="True" ShowContextMenu="False">
+				<hc:TabItem Header="Charts, Filters, Details" IsSelected="True">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="10" />
+							<RowDefinition Height="300" />
+						</Grid.RowDefinitions>
+						<Grid Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="400" />
+							</Grid.ColumnDefinitions>
+							<WpfPlot x:Name="NetworkChart" Margin="0 0 10 0"/>
+							<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="#0CF0F0F0" Margin="0 10 0 10" />
+							<DockPanel LastChildFill="True" Grid.Column="2">
+								<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Stretch" >
+									<hc:ComboBox x:Name="PlotStyleSelector" Margin="10 0 5 0" SelectedIndex="2"  SelectionChanged="PlotStyleSelector_SelectionChanged" HorizontalAlignment="Stretch">
+										<ComboBoxItem Content="Default"/>
+										<ComboBoxItem Content="Control"/>
+										<ComboBoxItem Content="Blue1"/>
+										<ComboBoxItem Content="Blue2"/>
+										<ComboBoxItem Content="Blue3"/>
+										<ComboBoxItem Content="Light1"/>
+										<ComboBoxItem Content="Light2"/>
+										<ComboBoxItem Content="Gray1"/>
+										<ComboBoxItem Content="Gray2"/>
+										<ComboBoxItem Content="Black"/>
+										<ComboBoxItem Content="Seaborn"/>
+									</hc:ComboBox>
+									<CheckBox x:Name="ChartShowLegendCheckBox" Content="Show Legend" IsChecked="True" Checked="ChartShowLegendCheckBox_Checked" Unchecked="ChartShowLegendCheckBox_Unchecked" HorizontalAlignment="Right"/>
+								</StackPanel>
+								<ListBox x:Name="ChartListBox" Margin="10 5 10 0"/>
+							</DockPanel>
+						</Grid>
+
+						<GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Background="#0CF0F0F0" Margin="10 5 5 0" />
+
+						<Grid Grid.Row="2" Margin="0 5 0 0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="400" />
+							</Grid.ColumnDefinitions>
+							<hc:TabControl x:Name="Details" Grid.Column="0" IsAnimationEnabled="True" IsDraggable="True" ShowContextMenu="False" >
+								<hc:TabItem Header="Summary">
+									<TreeView x:Name="ActorSummaryView"/>
+								</hc:TabItem>
+								<hc:TabItem Header="Actors">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="10" />
+											<ColumnDefinition Width="250" />
+										</Grid.ColumnDefinitions>
+										<ListView x:Name="ActorPerfPropsListView" Grid.Column="0" SelectionChanged="ActorPerfPropsListView_SelectionChanged">
+											<ListView.View>
+												<GridView>
+													<GridViewColumn Header="Actor" Width="Auto" DisplayMemberBinding="{Binding Header1}" />
+													<GridViewColumn Header="MS" Width="Auto" DisplayMemberBinding="{Binding Header2}" />
+													<GridViewColumn Header="KB/s" Width="Auto" DisplayMemberBinding="{Binding Header3}" />
+													<GridViewColumn Header="Bytes" Width="Auto" DisplayMemberBinding="{Binding Header4}" />
+													<GridViewColumn Header="Count" Width="Auto" DisplayMemberBinding="{Binding Header5}" />
+													<GridViewColumn Header="Update HZ" Width="Auto" DisplayMemberBinding="{Binding Header6}" />
+													<GridViewColumn Header="Rep HZ" Width="Auto" DisplayMemberBinding="{Binding Header7}" />
+													<GridViewColumn Header="Waste" Width="Auto" DisplayMemberBinding="{Binding Header8}" />
+												</GridView>
+											</ListView.View>
+										</ListView>
+										<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="#0CF0F0F0" Margin="1 10 1 10" />
+										<ListView x:Name="ActorPerfPropsDetailsListView" Grid.Column="2">
+											<ListView.View>
+												<GridView>
+													<GridViewColumn Header="Property" Width="Auto" DisplayMemberBinding="{Binding Header1}" />
+													<GridViewColumn Header="Bytes" Width="Auto" DisplayMemberBinding="{Binding Header2}" />
+													<GridViewColumn Header="Count" Width="Auto" DisplayMemberBinding="{Binding Header3}" />
+												</GridView>
+											</ListView.View>
+										</ListView>
+									</Grid>
+								</hc:TabItem>
+								<hc:TabItem Header="Token Details">
+									<TreeView x:Name="TokenDetailsView"/>
+								</hc:TabItem>
+							</hc:TabControl>
+							<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="#0CF0F0F0" Margin="2" />
+							<DockPanel Grid.Column="2">
+								<CheckBox x:Name="CheckAllConnectionsCheckBox" Content="Enable All" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="10 10 0 0" Checked="CheckAllConnectionsCheckBox_Checked" Unchecked="CheckAllConnectionsCheckBox_Unchecked" IsChecked="True"/>
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="110" />
+										<RowDefinition Height="*" />
+										<RowDefinition Height="60" />
+									</Grid.RowDefinitions>
+									<ListBox x:Name="ConnectionListBox" Margin="10" Grid.Row="0"/>
+									<StackPanel Grid.Row="1">
+										<DockPanel>
+											<TextBlock Text="Actor Filter" Margin="10"/>
+											<hc:ComboBox x:Name="ActorFilterBox" Margin="16,0,10,0"/>
+										</DockPanel>
+										<DockPanel>
+											<TextBlock Text="Property Filter" Margin="10"/>
+											<hc:ComboBox x:Name="PropertyFilterBox" Margin="0,0,10,0"/>
+										</DockPanel>
+										<DockPanel>
+											<TextBlock Text="RPC Filter" Margin="10"/>
+											<hc:ComboBox x:Name="RPCFilterBox" Margin="24,0,10,0"/>
+										</DockPanel>
+									</StackPanel>
+									<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+										<Button x:Name="ResetFiltersButton" Content="Reset Filters" Margin="0 0 5 0" Width="180" Click="ResetFiltersButton_Click" />
+										<Button x:Name="ApplyFiltersButton" Content="Apply Filters" HorizontalAlignment="Stretch" Margin="5 0 0 0" Click="ApplyFiltersButton_Click" Width="180"/>
+									</StackPanel>
+								</Grid>
+							</DockPanel>
+						</Grid>
+					</Grid>
+				</hc:TabItem>
+
+				<hc:TabItem Header="All Actors">
+					<ListView x:Name="ActorListView">
+						<ListView.View>
+							<GridView>
+								<GridViewColumn Header="Total Size (K/Bytes)" Width="Auto" DisplayMemberBinding="{Binding Header1}" />
+								<GridViewColumn Header="Count" Width="Auto" DisplayMemberBinding="{Binding Header2}" />
+								<GridViewColumn Header="Average Size (Bytes)" Width="Auto" DisplayMemberBinding="{Binding Header3}" />
+								<GridViewColumn Header="Average Size (Bits)" Width="Auto" DisplayMemberBinding="{Binding Header4}" />
+								<GridViewColumn Header="Time (ms)" Width="Auto" DisplayMemberBinding="{Binding Header5}" />
+								<GridViewColumn Header="Average Time (ms)" Width="Auto" DisplayMemberBinding="{Binding Header6}" />
+								<GridViewColumn Header="Actor Class" Width="Auto" DisplayMemberBinding="{Binding Header7}" />
+							</GridView>
+						</ListView.View>
+					</ListView>
+				</hc:TabItem>
+
+				<hc:TabItem Header="All Properties">
+					<ListView x:Name="PropertyListView">
+						<ListView.View>
+							<GridView>
+								<GridViewColumn Header="Total Size (K/Bytes)" Width="Auto" DisplayMemberBinding="{Binding Header1}" />
+								<GridViewColumn Header="Count" Width="Auto" DisplayMemberBinding="{Binding Header2}" />
+								<GridViewColumn Header="Average Size (Bytes)" Width="Auto" DisplayMemberBinding="{Binding Header3}" />
+								<GridViewColumn Header="Average Size (Bits)" Width="Auto" DisplayMemberBinding="{Binding Header4}" />
+								<GridViewColumn Header="Time (ms)" Width="Auto" DisplayMemberBinding="{Binding Header5}" />
+								<GridViewColumn Header="Average Time (ms)" Width="Auto" DisplayMemberBinding="{Binding Header6}" />
+								<GridViewColumn Header="Property" Width="Auto" DisplayMemberBinding="{Binding Header7}" />
+							</GridView>
+						</ListView.View>
+					</ListView>
+				</hc:TabItem>
+
+				<hc:TabItem Header="All RPCs">
+					<ListView x:Name="RPCListView">
+						<ListView.View>
+							<GridView>
+								<GridViewColumn Header="Total Size (K/Bytes)" Width="Auto" DisplayMemberBinding="{Binding Header1}" />
+								<GridViewColumn Header="Count" Width="Auto" DisplayMemberBinding="{Binding Header2}" />
+								<GridViewColumn Header="Average Size (Bytes)" Width="Auto" DisplayMemberBinding="{Binding Header3}" />
+								<GridViewColumn Header="Average Size (Bits)" Width="Auto" DisplayMemberBinding="{Binding Header4}" />
+								<GridViewColumn Header="Time (ms)" Width="Auto" DisplayMemberBinding="{Binding Header5}" />
+								<GridViewColumn Header="Average Time (ms)" Width="Auto" DisplayMemberBinding="{Binding Header6}" />
+								<GridViewColumn Header="RPC" Width="Auto" DisplayMemberBinding="{Binding Header7}" />
+							</GridView>
+						</ListView.View>
+					</ListView>
+				</hc:TabItem>
+
+				<hc:TabItem Header="All Objects">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="10" />
+							<ColumnDefinition Width="450" />
+						</Grid.ColumnDefinitions>
+						<ListView x:Name="ObjectReplicationListView" Grid.Column="0">
+							<ListView.View>
+								<GridView>
+									<GridViewColumn Header="Object Class" Width="Auto" />
+									<GridViewColumn Header="# Comparisons" Width="Auto" />
+									<GridViewColumn Header="# Replications" Width="Auto" />
+									<GridViewColumn Header="Comparison Time" Width="Auto" />
+									<GridViewColumn Header="Avg. Time Per Comparison" Width="Auto" />
+								</GridView>
+							</ListView.View>
+						</ListView>
+						<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="#0CF0F0F0" Margin="2" />
+						<ListView x:Name="ObjectPropertyReplicationListView" Grid.Column="2">
+							<ListView.View>
+								<GridView>
+									<GridViewColumn Header="Property" Width="Auto" />
+									<GridViewColumn Header="Comparisons" Width="Auto" />
+									<GridViewColumn Header="# Times Changed" Width="Auto" />
+								</GridView>
+							</ListView.View>
+						</ListView>
+					</Grid>
+				</hc:TabItem>
+
+			</hc:TabControl>
+		</DockPanel>
+	</Grid>
+</hc:GlowWindow>

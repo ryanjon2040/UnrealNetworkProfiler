@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UE4 Network Profiler", "UE4 Network Profiler\UE4 Network Profiler.csproj", "{1466DE04-14E6-482D-9285-C6359C79EB19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1466DE04-14E6-482D-9285-C6359C79EB19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1466DE04-14E6-482D-9285-C6359C79EB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1466DE04-14E6-482D-9285-C6359C79EB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1466DE04-14E6-482D-9285-C6359C79EB19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E814D7E3-C849-40F8-8AD3-CB964A088CB0}
+	EndGlobalSection
+EndGlobal
