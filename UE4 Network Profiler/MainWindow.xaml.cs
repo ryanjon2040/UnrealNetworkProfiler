@@ -115,6 +115,7 @@ namespace NetworkProfiler
 			SetDefaultLineView();
 			NetworkChart.Plot.Legend(true, ScottPlot.Alignment.UpperLeft);
 			DataContext = this;
+			Title = $"Unreal Engine Network Profiler v{GetProductVersionString()}";
 
 			if (GAME_KEY != null && SECRET_KEY != null)
 			{
