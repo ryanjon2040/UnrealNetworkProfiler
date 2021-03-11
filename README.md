@@ -16,6 +16,13 @@ This is a WPF rewrite of Network Profiler by Epic Games. Check out the original 
 
 ![Screenshot](NetworkProfiler.png)
 
+Limitations
+===================
+
+* Clicking on graph to view data for single frame is not supported.
+
+* Selecting a range from the graph is not supported.
+
 Dependencies
 ===================
 
