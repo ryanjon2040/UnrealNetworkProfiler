@@ -28,6 +28,8 @@ using System.Windows;
 using ScottPlot.Plottable;
 using GameAnalyticsSDK.Net;
 using System.Reflection;
+using UE4_Network_Profiler.UserControls;
+using HandyControl.Controls;
 
 namespace NetworkProfiler
 {
@@ -99,6 +101,8 @@ namespace NetworkProfiler
 
 		Thread LoadThread = null;
 		Thread SelectRangeThread = null;
+
+		private Dialog aboutDialog = null;
 
 		/** If non 0, we will early out of loading in this many minutes worth of profile time */
 		int MaxProfileMinutes = 0;
@@ -570,6 +574,17 @@ namespace NetworkProfiler
 		private void UnrealNetworkProfilerMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			GameAnalytics.EndSession();
+		}
+		private void AboutBtn_Click(object sender, RoutedEventArgs e)
+		{
+			GameAnalytics.AddDesignEvent("AboutDialogOpen");
+			aboutDialog = Dialog.Show(new AboutDialog(this));
+		}
+
+		public void CloseAboutDialog()
+		{
+			GameAnalytics.AddDesignEvent("AboutDialogClose");
+			aboutDialog.Close();
 		}
 	}
 
