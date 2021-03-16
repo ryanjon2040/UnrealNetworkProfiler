@@ -21,6 +21,8 @@ Limitations
 
 * Selecting a range from the graph is not supported.
 
+* List view sorting is not supported.
+
 Dependencies
 ===================
 
